@@ -115,6 +115,7 @@ enum {
      * If not set, the system heap is assumed to be coming from ashmem
      */
     GRALLOC_USAGE_PRIVATE_ION             =       0x00200000,
+    GRALLOC_USAGE_PRIVATE_WFD             =       0x00200000,
 
     /* This flag can be set to disable genlock synchronization
      * for the gralloc buffer. If this flag is set the caller
@@ -123,9 +124,11 @@ enum {
      * and may need to be moved if the gralloc API changes
      */
     GRALLOC_USAGE_PRIVATE_UNSYNCHRONIZED  =       0X00400000,
+    GRALLOC_USAGE_PRIVATE_INTERNAL_ONLY   =       GRALLOC_USAGE_PRIVATE_UNSYNCHRONIZED,
 
     /* Set this flag when you need to avoid mapping the memory in userspace */
     GRALLOC_USAGE_PRIVATE_DO_NOT_MAP      =       0X00800000,
+    GRALLOC_USAGE_PRIVATE_SECURE_DISPLAY  =       0X00800000,
 
     /* Buffer content should be displayed on an external display only */
     GRALLOC_USAGE_PRIVATE_EXTERNAL_ONLY   =       0x00010000,
