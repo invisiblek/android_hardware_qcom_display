@@ -383,12 +383,6 @@ int getLeftSplit(hwc_context_t *ctx, const int& dpy);
 
 bool isDisplaySplit(hwc_context_t* ctx, int dpy);
 
-// Set the GPU hint flag to high for MIXED/GPU composition only for
-// first frame after MDP to GPU/MIXED mode transition.
-// Set the GPU hint to default if the current composition type is GPU
-// due to idle fallback or MDP composition.
-void setGPUHint(hwc_context_t* ctx, hwc_display_contents_1_t* list);
-
 // Returns true if rect1 is peripheral to rect2, false otherwise.
 bool isPeripheral(const hwc_rect_t& rect1, const hwc_rect_t& rect2);
 
@@ -481,20 +475,6 @@ enum eAnimationState{
     ANIMATION_STARTED,
 };
 
-// Structure holds the information about the GPU hint.
-struct gpu_hint_info {
-    // system level flag to enable gpu_perf_mode
-    bool mGpuPerfModeEnable;
-    // Stores the current GPU performance mode DEFAULT/HIGH
-    bool mCurrGPUPerfMode;
-    // true if previous composition used GPU
-    bool mPrevCompositionGLES;
-    // Stores the EGLContext of current process
-    EGLContext mEGLContext;
-    // Stores the EGLDisplay of current process
-    EGLDisplay mEGLDisplay;
-};
-
 // -----------------------------------------------------------------------------
 // HWC context
 // This structure contains overall state
@@ -569,7 +549,6 @@ struct hwc_context_t {
     // This can be set via system property
     // persist.hwc.enable_vds
     bool mVDSEnabled;
-    struct gpu_hint_info mGPUHintInfo;
     // PTOR Info
     qhwc::PtorInfo mPtorInfo;
     uint32_t mIsPTOREnabled;
