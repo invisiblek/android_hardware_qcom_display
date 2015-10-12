@@ -38,6 +38,10 @@
 #define MAX_NUM_APP_LAYERS 32
 #define MAX_DISPLAY_DIM 2048
 
+#ifdef QTI_BSP
+#include <exhwcomposer_defs.h>
+#endif
+
 //Fwrd decls
 struct hwc_context_t;
 
