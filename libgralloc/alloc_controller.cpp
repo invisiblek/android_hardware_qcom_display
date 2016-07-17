@@ -290,7 +290,7 @@ int IonController::allocate(alloc_data& data, int usage)
 
     if(ret >= 0 ) {
         data.allocType |= private_handle_t::PRIV_FLAGS_USES_ION;
-#ifdef SECURE_MM_HEAP
+#ifndef SECURE_MM_HEAP
         if(nonContig)
             data.allocType |= private_handle_t::PRIV_FLAGS_NONCONTIGUOUS_MEM;
         if(ionFlags & ION_SECURE)
