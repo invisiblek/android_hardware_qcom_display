@@ -39,6 +39,7 @@ Tonemapper::Tonemapper()
 Tonemapper::~Tonemapper()
 //-----------------------------------------------------------------------------
 {
+  void* caller_context = engine_backup();
   engine_bind(engineContext);
   engine_deleteInputBuffer(tonemapTexture);
   engine_deleteInputBuffer(lutXformTexture);
@@ -51,6 +52,9 @@ Tonemapper::~Tonemapper()
   }
 
   engine_shutdown(engineContext);
+  // restore the caller context
+  engine_bind(caller_context);
+  engine_free_backup(caller_context);
 }
 
 //-----------------------------------------------------------------------------
@@ -68,6 +72,7 @@ Tonemapper *Tonemapper::build(int type, void *colorMap, int colorMapSize, void *
 
   tonemapper->engineContext = engine_initialize();
 
+  void* caller_context = engine_backup();
   engine_bind(tonemapper->engineContext);
 
   // load the 3d lut
@@ -98,6 +103,10 @@ Tonemapper *Tonemapper::build(int type, void *colorMap, int colorMapSize, void *
   tonemapper->programID =
       engine_loadProgram(1, &fullscreen_vertex_shader, fragmentShaderCount, fragmentShaders);
 
+  // restore the caller context
+  engine_bind(caller_context);
+  engine_free_backup(caller_context);
+
   return tonemapper;
 }
 
@@ -105,6 +114,7 @@ Tonemapper *Tonemapper::build(int type, void *colorMap, int colorMapSize, void *
 int Tonemapper::blit(const void *dst, const void *src, int srcFenceFd)
 //-----------------------------------------------------------------------------
 {
+  void* caller_context = engine_backup();
   // make current
   engine_bind(engineContext);
 
@@ -127,6 +137,11 @@ int Tonemapper::blit(const void *dst, const void *src, int srcFenceFd)
 
   // perform
   int fenceFD = engine_blit(srcFenceFd);
+
+  // restore the caller context
+  engine_bind(caller_context);
+  engine_free_backup(caller_context);
+
 
   return fenceFD;
 }
