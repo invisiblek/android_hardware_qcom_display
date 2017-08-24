@@ -38,6 +38,7 @@
 #include <cutils/ashmem.h>
 #include <linux/ashmem.h>
 #include <gralloc_priv.h>
+#include <utils/AndroidThreads.h>
 
 #include <copybit.h>
 #include <alloc_controller.h>
