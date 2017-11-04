@@ -22,6 +22,10 @@ ifeq ($(TARGET_USES_DRM_PP),true)
     LOCAL_CFLAGS              += -DPP_DRM_ENABLE
 endif
 
+ifneq ($(TARGET_DISPLAY_SHIFT_HORIZONTAL),)
+    LOCAL_CFLAGS += -DDISPLAY_SHIFT_HORIZONTAL=$(TARGET_DISPLAY_SHIFT_HORIZONTAL)
+endif
+
 LOCAL_ADDITIONAL_DEPENDENCIES := $(common_deps) $(kernel_deps)
 LOCAL_SRC_FILES               := core_interface.cpp \
                                  core_impl.cpp \
